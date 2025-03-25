@@ -1,0 +1,139 @@
+.dev-tools {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #333;
+  color: white;
+  z-index: 9999;
+  font-family: monospace;
+}
+
+.dev-tools-header {
+  padding: 5px 10px;
+  background-color: #ff5722;
+  text-align: center;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.dev-tools-content {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.dev-info {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  background-color: #444;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.dev-info p {
+  margin: 0;
+  font-size: 14px;
+}
+
+.dev-buttons {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.dev-buttons button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  flex: 1;
+}
+
+.dev-buttons button:nth-child(2) {
+  background-color: #2196f3;
+}
+
+.dev-buttons button:nth-child(3) {
+  background-color: #f44336;
+}
+
+.dev-buttons button:hover {
+  opacity: 0.9;
+}
+
+.dev-tools-bar {
+  display: flex;
+  align-items: center;
+  background-color: #ff5722;
+  color: white;
+  padding: 8px 15px;
+  margin-bottom: 15px;
+  border-radius: 6px;
+  font-family: monospace;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.dev-tools-title {
+  font-weight: bold;
+  background-color: #333;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.dev-tools-info {
+  flex: 1;
+  font-size: 14px;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.2);
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.dev-tools-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.dev-button {
+  background-color: #333;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  font-family: monospace;
+  white-space: nowrap;
+}
+
+.dev-button.reset {
+  background-color: #f44336;
+}
+
+.dev-button.random {
+  background-color: #4caf50;
+}
+
+.dev-button:hover {
+  opacity: 0.9;
+}
+
+@media (max-width: 600px) {
+  .dev-tools-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .dev-tools-info {
+    text-align: left;
+  }
+}

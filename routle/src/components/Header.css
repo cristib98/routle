@@ -1,0 +1,142 @@
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 0;
+  margin-bottom: 10px;
+}
+
+.header-left,
+.header-right {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.header-left {
+  justify-content: flex-start;
+}
+
+.header-right {
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.header-center {
+  flex: 2;
+  text-align: center;
+}
+
+.app-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.title-text {
+  background: linear-gradient(
+    90deg,
+    var(--color-primary),
+    var(--color-secondary)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.airplane-container {
+  position: relative;
+  width: 32px;
+  height: 32px;
+}
+
+.airplane-icon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: inline-block;
+  transform: rotate(45deg);
+  animation: fly 3s infinite ease-in-out;
+  font-size: 1.8rem;
+}
+
+.app-subtitle {
+  font-size: 1rem;
+  color: var(--color-text-light);
+  margin-top: -5px;
+  font-weight: 500;
+}
+
+.icon-button {
+  background: transparent;
+  border: none;
+  color: var(--color-text);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+}
+
+.icon-button:hover {
+  background-color: var(--color-bg-secondary);
+  transform: translateY(0);
+}
+
+.dark-mode .icon-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+@keyframes fly {
+  0%,
+  100% {
+    transform: rotate(45deg) translateY(0);
+  }
+  50% {
+    transform: rotate(45deg) translateY(-5px);
+  }
+}
+
+@media (max-width: 600px) {
+  .app-title {
+    font-size: 2rem;
+  }
+
+  .app-subtitle {
+    font-size: 0.85rem;
+  }
+
+  .icon-button {
+    width: 36px;
+    height: 36px;
+  }
+
+  .airplane-icon {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .app-title {
+    font-size: 1.7rem;
+  }
+
+  .header-left,
+  .header-right {
+    flex: 0;
+  }
+
+  .header-center {
+    flex: 1;
+  }
+
+  .app-subtitle {
+    display: none;
+  }
+}

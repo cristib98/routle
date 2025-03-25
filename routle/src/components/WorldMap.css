@@ -1,0 +1,130 @@
+.world-map-container {
+  position: relative;
+  width: 100%;
+  height: 500px;
+  background-color: #e6f7ff;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ddd;
+}
+
+.world-map {
+  width: 100%;
+  height: 100%;
+  cursor: grab;
+}
+
+.world-map:active {
+  cursor: grabbing;
+}
+
+.country {
+  transition: fill 0.2s;
+  stroke: rgba(255, 255, 255, 0.5);
+  stroke-width: 0.5;
+}
+
+.country.hovered {
+  fill: #1976d2 !important;
+  cursor: pointer;
+  filter: brightness(1.1);
+  stroke: #fff;
+  stroke-width: 1;
+}
+
+.map-tooltip {
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 500;
+  pointer-events: none;
+  z-index: 10000;
+  white-space: nowrap;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.country-marker {
+  cursor: pointer;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4));
+}
+
+.marker-pulse {
+  opacity: 0.3;
+}
+
+.map-error {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: #cce5ff;
+  color: #333;
+}
+
+.map-error p {
+  margin-bottom: 15px;
+  font-weight: 500;
+}
+
+.reset-view-button {
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 4px;
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #333;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s;
+  z-index: 5;
+}
+
+.reset-view-button:hover {
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+  transform: translateY(-1px);
+}
+
+.map-instructions {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background-color: rgba(255, 255, 255, 0.8);
+  color: #333;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  z-index: 5;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+
+.map-instructions:hover {
+  opacity: 1;
+}
+
+@media (max-width: 768px) {
+  .map-instructions {
+    font-size: 10px;
+    padding: 4px 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .map-instructions {
+    display: none;
+  }
+}

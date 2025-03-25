@@ -1,0 +1,15 @@
+{
+  "short_name": "Routle",
+  "name": "Routle - Guess the Flight Route",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "64x64",
+      "type": "image/x-icon"
+    }
+  ],
+  "start_url": ".",
+  "display": "browser",
+  "theme_color": "#4a90e2",
+  "background_color": "#ffffff"
+}

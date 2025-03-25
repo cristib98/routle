@@ -1,0 +1,331 @@
+:root {
+  /* Modern Color Palette */
+  --color-primary: #4361ee;
+  --color-primary-dark: #3a56d4;
+  --color-primary-light: #4895ef;
+  --color-secondary: #f72585;
+  --color-success: #4ade80;
+  --color-error: #f43f5e;
+  --color-warning: #fbbf24;
+
+  /* Light Mode */
+  --color-text: #1f2937;
+  --color-text-light: #4b5563;
+  --color-text-subtle: #9ca3af;
+  --color-border: #e5e7eb;
+  --color-border-light: #f3f4f6;
+
+  --color-bg: #f9fafb;
+  --color-bg-secondary: #f3f4f6;
+  --color-card-bg: #ffffff;
+
+  /* Elevation */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+
+  /* Shapes */
+  --border-radius-sm: 8px;
+  --border-radius: 12px;
+  --border-radius-lg: 16px;
+  --border-radius-xl: 24px;
+  --border-radius-full: 9999px;
+
+  /* Transitions */
+  --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Layout */
+  --container-width: 600px;
+  --container-padding: 20px;
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+
+  /* Game Colors */
+  --color-known: #4ade80;
+  --color-unknown: #3b82f6;
+  --color-incorrect: #f43f5e;
+  --color-tooltip: rgba(0, 0, 0, 0.8);
+  --color-water: #b1e1fa;
+}
+
+.dark-mode {
+  --color-primary: #60a5fa;
+  --color-primary-dark: #3b82f6;
+  --color-primary-light: #93c5fd;
+
+  --color-text: #f9fafb;
+  --color-text-light: #e5e7eb;
+  --color-text-subtle: #9ca3af;
+  --color-border: #374151;
+  --color-border-light: #1f2937;
+
+  --color-bg: #111827;
+  --color-bg-secondary: #1f2937;
+  --color-card-bg: #1f2937;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3),
+    0 2px 4px -1px rgba(0, 0, 0, 0.2);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.3),
+    0 4px 6px -2px rgba(0, 0, 0, 0.2);
+
+  /* Game Colors in Dark Mode */
+  --color-known: #4ade80;
+  --color-unknown: #3b82f6;
+  --color-incorrect: #f43f5e;
+  --color-tooltip: rgba(15, 23, 42, 0.8);
+  --color-water: #164e63;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, sans-serif;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  transition: background-color var(--transition-normal),
+    color var(--transition-normal);
+  line-height: 1.6;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+}
+
+.app-container {
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding: 0 var(--container-padding) var(--spacing-xl);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+button,
+.button {
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  transition: all var(--transition-fast);
+  border: none;
+  outline: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--border-radius-full);
+  padding: var(--spacing-sm) var(--spacing-lg);
+  background-color: var(--color-primary);
+  color: white;
+}
+
+button:hover,
+.button:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+button:active,
+.button:active {
+  transform: translateY(0);
+}
+
+button:disabled,
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--color-primary-dark);
+}
+
+.card {
+  background-color: var(--color-card-bg);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+  transition: transform var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Animation Classes */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.fade-in {
+  animation: fadeIn var(--transition-normal);
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.slide-up {
+  animation: slideUp var(--transition-normal);
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.pulse {
+  animation: pulse 2s infinite;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.float {
+  animation: float 4s ease-in-out infinite;
+}
+
+/* Responsive Media Queries */
+@media (max-width: 768px) {
+  :root {
+    --container-padding: 16px;
+  }
+
+  .app-container {
+    padding-bottom: var(--spacing-lg);
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --container-padding: 12px;
+  }
+
+  body {
+    font-size: 15px;
+  }
+}
+
+.offline-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  text-align: center;
+  background-color: var(--color-card-bg);
+  border-radius: var(--border-radius);
+  padding: 30px;
+  box-shadow: var(--shadow-sm);
+}
+
+.offline-icon {
+  font-size: 3rem;
+  margin-bottom: 20px;
+  color: var(--color-text-light);
+}
+
+.offline-message h2 {
+  margin-bottom: 10px;
+  color: var(--color-text);
+}
+
+.offline-message p {
+  margin-bottom: 0;
+  color: var(--color-text-light);
+}
+
+.loading-container,
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  text-align: center;
+  min-height: 300px;
+}
+
+.loading-spinner {
+  border: 4px solid var(--color-bg-secondary);
+  border-top: 4px solid var(--color-primary);
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+  margin-bottom: 20px;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.error-container button {
+  margin-top: 15px;
+  background-color: var(--color-primary);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-weight: 600;
+}
+
+.error-container p {
+  color: var(--color-error);
+  margin-bottom: 10px;
+}

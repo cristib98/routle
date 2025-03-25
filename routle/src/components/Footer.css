@@ -1,0 +1,117 @@
+.app-footer {
+  margin-top: auto;
+  padding: var(--spacing-lg) 0;
+  border-top: 1px solid var(--color-border);
+}
+
+.footer-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-md);
+  text-align: center;
+}
+
+.footer-message {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  margin-bottom: var(--spacing-xs);
+}
+
+.message-icon {
+  font-size: 1.5rem;
+  animation: spin 20s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.message-text {
+  font-size: 1rem;
+  font-weight: 600;
+  background: linear-gradient(
+    90deg,
+    var(--color-primary),
+    var(--color-secondary)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.footer-links {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-xs);
+}
+
+.footer-link {
+  color: var(--color-text-light);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+  font-size: 0.9rem;
+}
+
+.footer-link:hover {
+  color: var(--color-primary);
+  text-decoration: underline;
+}
+
+.footer-divider {
+  color: var(--color-text-subtle);
+  font-size: 0.8rem;
+}
+
+.footer-copyright {
+  font-size: 0.85rem;
+  color: var(--color-text-subtle);
+  margin-bottom: var(--spacing-sm);
+}
+
+.social-links {
+  display: flex;
+  gap: var(--spacing-md);
+}
+
+.social-icon {
+  color: var(--color-text-light);
+  transition: color var(--transition-fast), transform var(--transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.social-icon:hover {
+  color: var(--color-primary);
+  transform: translateY(-2px);
+}
+
+@media (max-width: 480px) {
+  .app-footer {
+    padding: var(--spacing-md) 0;
+  }
+
+  .message-text {
+    font-size: 0.9rem;
+  }
+
+  .footer-links {
+    gap: var(--spacing-xs);
+  }
+
+  .footer-link {
+    font-size: 0.8rem;
+  }
+
+  .footer-copyright {
+    font-size: 0.75rem;
+  }
+}

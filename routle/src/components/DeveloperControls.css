@@ -1,0 +1,146 @@
+.dev-controls {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  background-color: #333;
+  color: white;
+  z-index: 1000;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  width: 300px;
+  transition: height 0.3s ease;
+}
+
+.dev-controls.collapsed {
+  height: 40px;
+}
+
+.dev-controls.expanded {
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.dev-header {
+  padding: 10px 15px;
+  cursor: pointer;
+  background-color: #444;
+  user-select: none;
+}
+
+.dev-header h3 {
+  margin: 0;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dev-content {
+  padding: 15px;
+}
+
+.dev-section {
+  margin-bottom: 20px;
+}
+
+.dev-section h4 {
+  margin: 0 0 10px 0;
+  font-size: 14px;
+  color: #ccc;
+}
+
+.countries-info {
+  background-color: #222;
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+}
+
+.country-info {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+  font-size: 14px;
+}
+
+.country-value {
+  font-weight: bold;
+  color: #4a90e2;
+}
+
+.country-selector {
+  background-color: #222;
+  padding: 10px;
+  border-radius: 6px;
+}
+
+.select-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.select-row label {
+  width: 80px;
+  font-size: 14px;
+}
+
+.select-row select {
+  flex: 1;
+  padding: 6px;
+  background-color: #333;
+  color: white;
+  border: 1px solid #555;
+  border-radius: 4px;
+}
+
+.buttons-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.dev-button {
+  background-color: #444;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.2s;
+  flex: 1;
+}
+
+.dev-button:hover {
+  background-color: #555;
+}
+
+.dev-button.primary {
+  background-color: #4a90e2;
+}
+
+.dev-button.primary:hover {
+  background-color: #3a80d2;
+}
+
+.dev-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.dev-note {
+  font-size: 12px;
+  color: #aaa;
+  font-style: italic;
+  margin-top: 15px;
+}
+
+@media (max-width: 600px) {
+  .dev-controls {
+    width: 260px;
+    left: 10px;
+    bottom: 10px;
+  }
+}

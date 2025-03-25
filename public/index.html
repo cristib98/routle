@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#4a90e2" />
+    <meta
+      name="description"
+      content="Routle - A daily flight route guessing game. Can you identify the mystery flight from one country to another?"
+    />
+    <meta property="og:title" content="Routle - Guess the Flight Route" />
+    <meta
+      property="og:description"
+      content="A daily flight route guessing game. New puzzle every day!"
+    />
+    <meta property="og:image" content="%PUBLIC_URL%/social-preview.png" />
+    <meta property="og:url" content="https://routle.app" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Remove apple-touch-icon and manifest references -->
+
+    <!-- Preconnect to any third-party domains -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Load fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <title>Routle - Guess the Flight Route</title>
+
+    <!-- Splash screen styles remain the same -->
+    <style>
+      /* Inline the splash styles to avoid a flash of unstyled content */
+      .splash-screen {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        background-color: #4a90e2;
+        color: white;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 9999;
+        transition: opacity 0.4s;
+      }
+      .splash-logo {
+        font-size: 3rem;
+        font-weight: bold;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+      }
+      .splash-spinner {
+        width: 40px;
+        height: 40px;
+        border: 4px solid rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        border-top-color: white;
+        animation: spin 1s linear infinite;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+
+    <!-- Splash screen that shows while React loads -->
+    <div id="splash" class="splash-screen">
+      <div class="splash-logo">
+        Routle
+        <span
+          style="
+            margin-left: 8px;
+            transform: rotate(45deg);
+            display: inline-block;
+          "
+          >✈️</span
+        >
+      </div>
+      <div class="splash-spinner"></div>
+    </div>
+
+    <script>
+      // Hide splash when app is loaded
+      window.addEventListener("load", function () {
+        setTimeout(function () {
+          const splash = document.getElementById("splash");
+          if (splash) {
+            splash.style.opacity = 0;
+            setTimeout(function () {
+              splash.style.display = "none";
+            }, 400);
+          }
+        }, 500);
+      });
+    </script>
+  </body>
+</html>

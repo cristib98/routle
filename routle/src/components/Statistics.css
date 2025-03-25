@@ -1,0 +1,149 @@
+.statistics-content {
+  padding: 20px;
+}
+
+.stats-summary {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+  gap: 10px;
+}
+
+.stat-box {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 15px 5px;
+  background-color: var(--color-bg-secondary);
+  border-radius: var(--border-radius);
+}
+
+.stat-value {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-bottom: 5px;
+}
+
+.stat-label {
+  font-size: 0.8rem;
+  color: var(--color-text-light);
+  text-align: center;
+}
+
+.stats-section {
+  margin-bottom: 25px;
+}
+
+.stats-section h3 {
+  font-size: 1.1rem;
+  margin-bottom: 15px;
+  color: var(--color-text);
+}
+
+.guess-distribution {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.distribution-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.guess-label {
+  min-width: 15px;
+  text-align: center;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.guess-bar-container {
+  flex: 1;
+  height: 20px;
+  background-color: var(--color-bg);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.guess-bar {
+  height: 100%;
+  min-width: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 8px;
+  transition: width 0.5s ease-out;
+}
+
+.guess-count {
+  color: white;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.no-data-message {
+  padding: 20px;
+  text-align: center;
+  color: var(--color-text-light);
+  background-color: var(--color-bg-secondary);
+  border-radius: var(--border-radius);
+}
+
+.date-info {
+  padding: 10px 15px;
+  background-color: var(--color-bg-secondary);
+  border-radius: var(--border-radius);
+  color: var(--color-text);
+}
+
+.share-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid var(--color-border);
+}
+
+.share-section p {
+  color: var(--color-text-light);
+}
+
+.share-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background-color: var(--color-primary);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius);
+  font-weight: 500;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.share-button:hover {
+  background-color: var(--color-primary-dark);
+}
+
+@media (max-width: 480px) {
+  .stat-value {
+    font-size: 1.4rem;
+  }
+
+  .stat-label {
+    font-size: 0.7rem;
+  }
+
+  .share-button {
+    width: 100%;
+    justify-content: center;
+  }
+}
