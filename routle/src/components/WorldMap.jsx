@@ -156,7 +156,9 @@ const WorldMap = ({
             return true;
           }}
         >
-          <Geographies geography="/data/world-110m.json">
+          <Geographies
+            geography={`${process.env.PUBLIC_URL}/data/world-110m.json`}
+          >
             {({ geographies }) =>
               geographies.map((geo) => (
                 <Geography

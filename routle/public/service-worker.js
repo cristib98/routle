@@ -1,17 +1,22 @@
 // Cache name with version
 const CACHE_NAME = "routle-cache-v1";
 
-// List of resources to cache - update this list to include ALL necessary files
+// Get the base URL from the location
+const getBaseUrl = () => {
+  const pathSegments = location.pathname.split("/");
+  return pathSegments.slice(0, pathSegments.length - 1).join("/") || "/";
+};
+
+// List of resources to cache
 const urlsToCache = [
-  "/",
-  "/index.html",
-  "/manifest.json",
-  "/favicon.ico",
-  "/logo192.png",
-  "/logo512.png",
-  "/data/world-110m.json",
-  // Include all your CSS and JS files from the build folder
-  // You may need to check your build folder to get the exact filenames
+  getBaseUrl(),
+  `${getBaseUrl()}/index.html`,
+  `${getBaseUrl()}/manifest.json`,
+  `${getBaseUrl()}/favicon.ico`,
+  `${getBaseUrl()}/logo192.png`,
+  `${getBaseUrl()}/logo512.png`,
+  `${getBaseUrl()}/data/world-110m.json`,
+  // Add other critical files
 ];
 
 // Install service worker and cache resources
