@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/routle/static/css/main.5bf3dc72.css",
+    "main.js": "/routle/static/js/main.264ff61a.js",
+    "index.html": "/routle/index.html",
+    "main.5bf3dc72.css.map": "/routle/static/css/main.5bf3dc72.css.map",
+    "main.264ff61a.js.map": "/routle/static/js/main.264ff61a.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.5bf3dc72.css",
+    "static/js/main.264ff61a.js"
+  ]
+}
