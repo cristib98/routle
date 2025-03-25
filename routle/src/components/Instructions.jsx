@@ -54,12 +54,6 @@ const Instructions = ({ onClose }) => {
                 Each day features a new pair of countries. One country is
                 revealed to you as your starting point.
               </p>
-              <div className="instruction-image">
-                <div className="instruction-map">
-                  <div className="known-dot"></div>
-                  <div className="known-label">Starting Country</div>
-                </div>
-              </div>
             </div>
           </div>
 
@@ -68,8 +62,9 @@ const Instructions = ({ onClose }) => {
             <div className="step-content">
               <h3>Make Your Guesses</h3>
               <p>
-                You have 6 attempts to find the target country. Enter your
-                guesses in the input field.
+                You have 10 attempts to find the target country. Select
+                countries on the map or use the search field to make your
+                guesses.
               </p>
               <ul className="guess-results">
                 <li>
@@ -121,7 +116,7 @@ const Instructions = ({ onClose }) => {
             <div className="step-number">4</div>
             <div className="step-content">
               <h3>Win the Game</h3>
-              <p>Find the target country within 6 guesses to win!</p>
+              <p>Find the target country within 10 guesses to win!</p>
               <p>A new Routle challenge is available each day.</p>
             </div>
           </div>
@@ -167,12 +162,6 @@ const Instructions = ({ onClose }) => {
                 </div>
               </div>
             </div>
-          </div>
-
-          <div className="start-playing">
-            <button className="play-button" onClick={onClose}>
-              Start Playing!
-            </button>
           </div>
         </div>
 

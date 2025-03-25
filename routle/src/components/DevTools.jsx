@@ -46,7 +46,7 @@ This will reset your progress.`)
 
   return (
     <div className="dev-tools-bar">
-      <div className="dev-tools-title">DEV TOOLS</div>
+      {/* <div className="dev-tools-title">DEV TOOLS</div> */}
       <div className="dev-tools-info">
         <span>
           Target: {targetCountry.name} {targetCountry.flag}

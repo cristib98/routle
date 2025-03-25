@@ -8,16 +8,16 @@ import { countries } from "../data/countriesData";
 import DevTools from "./DevTools";
 import "./Game.css";
 
-const MAX_GUESSES = 6;
+const MAX_GUESSES = 10;
 
 const Game = ({ knownCountry, targetCountry, onGameComplete }) => {
   const [guesses, setGuesses] = useState([]);
   const [hints, setHints] = useState([]);
   const [gameStatus, setGameStatus] = useState("playing"); // playing, won, lost
   const [selectedCountry, setSelectedCountry] = useState(null);
-  const [showResult, setShowResult] = useState(false);
   const [gameCompleted, setGameCompleted] = useState(false);
   const [visibleTips, setVisibleTips] = useState([]);
+  const [showResultCard, setShowResultCard] = useState(false);
 
   // Check if there's a saved game state in localStorage
   useEffect(() => {
@@ -37,11 +37,11 @@ const Game = ({ knownCountry, targetCountry, onGameComplete }) => {
       setHints(savedHints);
       setVisibleTips(savedHints); // This is critical to show hints immediately
       setGameStatus(status);
-      setGameCompleted(status !== "playing");
 
-      // If game was completed, also show the result
+      // If game was completed, make sure we show the result card
       if (status !== "playing") {
-        setShowResult(true);
+        setGameCompleted(true);
+        setShowResultCard(true);
       }
     }
   }, [knownCountry]);
@@ -62,17 +62,6 @@ const Game = ({ knownCountry, targetCountry, onGameComplete }) => {
     }
   }, [guesses, hints, gameStatus, knownCountry]);
 
-  // When game ends, notify parent component and show result
-  useEffect(() => {
-    if (gameStatus === "won" || gameStatus === "lost") {
-      if (!gameCompleted) {
-        onGameComplete(gameStatus === "won", guesses.length);
-        setGameCompleted(true);
-        setShowResult(true);
-      }
-    }
-  }, [gameStatus, guesses.length, onGameComplete, gameCompleted]);
-
   // Handle a new guess
   const handleGuess = (country) => {
     if (gameStatus !== "playing") return;
@@ -80,16 +69,25 @@ const Game = ({ knownCountry, targetCountry, onGameComplete }) => {
     const newGuesses = [...guesses, country];
     setGuesses(newGuesses);
 
-    if (country.name === targetCountry.name) {
-      // Correct guess - game won
+    const isCorrect = country.name === targetCountry.name;
+
+    if (isCorrect) {
       setGameStatus("won");
       setGameCompleted(true);
+      setShowResultCard(true);
+
+      // If callback exists, call it
       if (onGameComplete) {
         onGameComplete(true, newGuesses.length);
       }
     } else {
-      // Incorrect guess - generate a hint
-      const newHint = generateHint(country, targetCountry, hints.length + 1);
+      // Incorrect guess - generate a hint based on comparing the TARGET with the KNOWN country
+      // (not the guessed country)
+      const newHint = generateHint(
+        knownCountry,
+        targetCountry,
+        hints.length + 1
+      );
       const updatedHints = [...hints, newHint];
       setHints(updatedHints);
 
@@ -100,8 +98,11 @@ const Game = ({ knownCountry, targetCountry, onGameComplete }) => {
       if (newGuesses.length >= MAX_GUESSES) {
         setGameStatus("lost");
         setGameCompleted(true);
+        setShowResultCard(true);
+
+        // If callback exists, call it
         if (onGameComplete) {
-          onGameComplete(false, MAX_GUESSES);
+          onGameComplete(false, newGuesses.length);
         }
       }
     }
@@ -123,19 +124,14 @@ const Game = ({ knownCountry, targetCountry, onGameComplete }) => {
     }
   };
 
-  // Handle closing the result card
+  // Add a close handler for the ResultCard
   const handleCloseResult = () => {
-    setShowResult(false);
-  };
-
-  // Handle reopening the result card
-  const handleShowResult = () => {
-    setShowResult(true);
+    setShowResultCard(false);
   };
 
   return (
     <div className="game-container">
-      {process.env.NODE_ENV === "development" && (
+      {/* {process.env.NODE_ENV === "development" && (
         <DevTools
           knownCountry={knownCountry}
           targetCountry={targetCountry}
@@ -149,7 +145,6 @@ const Game = ({ knownCountry, targetCountry, onGameComplete }) => {
             setHints([]);
             setGameStatus("playing");
             setGameCompleted(false);
-            setShowResult(false);
           }}
           onChangeCountries={(newKnown, newTarget) => {
             // This would need to be handled by a prop from the parent component
@@ -157,8 +152,7 @@ const Game = ({ knownCountry, targetCountry, onGameComplete }) => {
             window.location.reload();
           }}
         />
-      )}
-
+      )} */}
       <div className="game-status">
         <div className="status-info">
           <div className="game-journey">
@@ -175,7 +169,7 @@ const Game = ({ knownCountry, targetCountry, onGameComplete }) => {
             </div>
           </div>
           <div className="guess-counter">
-            Guess {guesses.length}/{MAX_GUESSES}
+            Guess {guesses.length} of {MAX_GUESSES}
           </div>
         </div>
       </div>
@@ -204,30 +198,20 @@ const Game = ({ knownCountry, targetCountry, onGameComplete }) => {
           />
         </div>
       ) : (
-        <>
-          {showResult ? (
-            <ResultCard
-              status={gameStatus}
-              guessCount={guesses.length}
-              maxGuesses={MAX_GUESSES}
-              knownCountry={knownCountry}
-              targetCountry={targetCountry}
-              onClose={handleCloseResult}
-            />
-          ) : (
-            <div className="game-completed">
-              <p className="completed-message">
-                Game completed:{" "}
-                {gameStatus === "won"
-                  ? "You found the country!"
-                  : "Better luck next time!"}
-              </p>
-              <button className="view-result-button" onClick={handleShowResult}>
-                View Results
-              </button>
-            </div>
-          )}
-        </>
+        <div className="game-completed">
+          {/* Empty div to hold space if not showing result */}
+        </div>
+      )}
+
+      {showResultCard && gameStatus !== "playing" && (
+        <ResultCard
+          status={gameStatus}
+          guessCount={guesses.length}
+          maxGuesses={MAX_GUESSES}
+          knownCountry={knownCountry}
+          targetCountry={targetCountry}
+          onClose={handleCloseResult}
+        />
       )}
     </div>
   );

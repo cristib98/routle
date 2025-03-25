@@ -1,142 +1,100 @@
 .app-header {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  padding: 20px 0;
-  margin-bottom: 10px;
-}
-
-.header-left,
-.header-right {
-  flex: 1;
-  display: flex;
   align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid #eaeaea;
 }
 
 .header-left {
-  justify-content: flex-start;
-}
-
-.header-right {
-  justify-content: flex-end;
-  gap: 12px;
-}
-
-.header-center {
-  flex: 2;
-  text-align: center;
+  display: flex;
+  align-items: center;
 }
 
 .app-title {
-  font-size: 2.5rem;
-  font-weight: 800;
-  margin: 0;
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: 8px;
 }
 
 .title-text {
-  background: linear-gradient(
-    90deg,
-    var(--color-primary),
-    var(--color-secondary)
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #1976d2;
+  letter-spacing: -0.5px;
 }
 
 .airplane-container {
-  position: relative;
-  width: 32px;
-  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .airplane-icon {
-  position: absolute;
-  top: 0;
-  left: 0;
-  display: inline-block;
-  transform: rotate(45deg);
-  animation: fly 3s infinite ease-in-out;
   font-size: 1.8rem;
+  transform: rotate(-45deg);
 }
 
 .app-subtitle {
-  font-size: 1rem;
-  color: var(--color-text-light);
-  margin-top: -5px;
+  font-size: 0.95rem;
   font-weight: 500;
+  color: #666;
+  margin-left: 8px;
+  margin-top: 8px;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
 }
 
 .icon-button {
-  background: transparent;
+  background: none;
   border: none;
-  color: var(--color-text);
-  width: 40px;
-  height: 40px;
+  padding: 10px;
+  cursor: pointer;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background-color 0.2s;
+  transition: background-color 0.2s ease;
 }
 
 .icon-button:hover {
-  background-color: var(--color-bg-secondary);
-  transform: translateY(0);
+  background-color: rgba(0, 0, 0, 0.05);
 }
 
-.dark-mode .icon-button:hover {
-  background-color: rgba(255, 255, 255, 0.1);
+.icon-button svg {
+  width: 28px;
+  height: 28px;
+  color: #555;
 }
 
-@keyframes fly {
-  0%,
-  100% {
-    transform: rotate(45deg) translateY(0);
-  }
-  50% {
-    transform: rotate(45deg) translateY(-5px);
-  }
+.icon-button:hover svg {
+  color: #1976d2;
 }
 
 @media (max-width: 600px) {
-  .app-title {
-    font-size: 2rem;
+  .app-header {
+    padding: 15px;
   }
 
-  .app-subtitle {
-    font-size: 0.85rem;
-  }
-
-  .icon-button {
-    width: 36px;
-    height: 36px;
+  .title-text {
+    font-size: 1.8rem;
   }
 
   .airplane-icon {
     font-size: 1.5rem;
   }
-}
-
-@media (max-width: 400px) {
-  .app-title {
-    font-size: 1.7rem;
-  }
-
-  .header-left,
-  .header-right {
-    flex: 0;
-  }
-
-  .header-center {
-    flex: 1;
-  }
 
   .app-subtitle {
+    font-size: 0.8rem;
     display: none;
+  }
+
+  .icon-button svg {
+    width: 24px;
+    height: 24px;
   }
 }

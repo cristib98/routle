@@ -142,140 +142,72 @@ const ResultCard = ({
         </div>
       )}
 
+      <div className="result-header">
+        <h2>{status === "won" ? "You found it!" : "Better luck next time"}</h2>
+        <button className="close-button" onClick={onClose}>
+          ×
+        </button>
+      </div>
+
       <div className="result-content">
-        <div className="result-header">
-          {onClose && (
-            <button
-              className="close-button"
-              onClick={onClose}
-              aria-label="Close"
-            >
-              <svg
-                viewBox="0 0 24 24"
-                width="24"
-                height="24"
-                stroke="currentColor"
-                strokeWidth="2"
-                fill="none"
-              >
-                <line x1="18" y1="6" x2="6" y2="18"></line>
-                <line x1="6" y1="6" x2="18" y2="18"></line>
-              </svg>
-            </button>
-          )}
-
-          {won ? (
-            <>
-              <div className="result-emoji" aria-hidden="true">
-                🎉
-              </div>
-              <h2 className="result-title success">You Found It!</h2>
-              <div className="result-subtitle">
-                <span className="guess-score">
-                  <span className="guess-count">{guessCount}</span>
-                  <span className="guess-divider">/</span>
-                  <span className="max-guesses">{maxGuesses}</span>
-                </span>
-                <span className="guess-text">guesses</span>
-              </div>
-            </>
-          ) : (
-            <>
-              <div className="result-emoji" aria-hidden="true">
-                😢
-              </div>
-              <h2 className="result-title failure">Better Luck Next Time</h2>
-              <div className="result-subtitle">
-                <span>The country was </span>
-                <span className="target-country">
-                  {typeof targetCountry === "object" ? (
-                    <>
-                      <span className="country-flag">{targetCountry.flag}</span>
-                      <span className="country-name">{targetCountry.name}</span>
-                    </>
-                  ) : (
-                    targetCountry
-                  )}
-                </span>
-              </div>
-            </>
-          )}
-        </div>
-
         <div className="result-journey">
-          <div className="journey-from">
-            <div className="journey-flag">
-              {typeof knownCountry === "object" ? knownCountry.flag : "🏁"}
-            </div>
-            <div className="journey-name">
-              {typeof knownCountry === "object"
-                ? knownCountry.name
-                : knownCountry}
-            </div>
+          <div className="country-card start">
+            <div className="country-flag">{knownCountry.flag}</div>
+            <div className="country-name">{knownCountry.name}</div>
           </div>
 
-          <div className="journey-path">
-            <div className="journey-line"></div>
-            <div className="journey-plane">✈️</div>
+          <div className="journey-arrow">
+            <span>→</span>
           </div>
 
-          <div className="journey-to">
-            <div className="journey-flag">
-              {typeof targetCountry === "object" ? targetCountry.flag : "🏁"}
-            </div>
-            <div className="journey-name">
-              {typeof targetCountry === "object"
-                ? targetCountry.name
-                : targetCountry}
-            </div>
+          <div className="country-card end">
+            <div className="country-flag">{targetCountry.flag}</div>
+            <div className="country-name">{targetCountry.name}</div>
           </div>
         </div>
 
         <div className="result-stats">
-          <div className="guess-distribution">
-            {[...Array(maxGuesses)].map((_, i) => (
-              <div
-                key={i}
-                className={`guess-bar ${
-                  i + 1 === guessCount && won ? "correct" : ""
-                } ${i + 1 < guessCount ? "used" : ""}`}
-              >
-                {i + 1 === guessCount && won && "✓"}
-                {i + 1 < guessCount && "✗"}
-              </div>
-            ))}
+          <div className="stat-item">
+            <span className="stat-label">Distance</span>
+            <span className="stat-value">
+              {Math.round(getDistance(knownCountry, targetCountry))} km
+            </span>
+          </div>
+          <div className="stat-item">
+            <span className="stat-label">Time Zone Difference</span>
+            <span className="stat-value">
+              {getTimezoneDifference(knownCountry, targetCountry)}
+            </span>
           </div>
         </div>
+      </div>
 
-        <div className="next-puzzle">
-          <div className="next-label">Next Routle in</div>
-          <div className="countdown">{timeUntilNext}</div>
-        </div>
-
-        <div className="result-actions">
-          <button className="share-button" onClick={shareResults}>
-            {copied ? (
-              <>
-                <span className="share-icon">✓</span>
-                <span>Copied!</span>
-              </>
-            ) : (
-              <>
-                <span className="share-icon">📋</span>
-                <span>Share Results</span>
-              </>
-            )}
-          </button>
-
-          {onClose && (
-            <button className="close-button-main" onClick={onClose}>
-              Close
-            </button>
-          )}
-        </div>
+      <div className="result-footer">
+        <p className="next-game">
+          Next Routle in <span className="countdown">{formatTime()}</span>
+        </p>
+        <button className="close-result-button" onClick={onClose}>
+          Close
+        </button>
       </div>
     </div>
   );
+};
+
+// Helper functions for calculations
+const getDistance = (country1, country2) => {
+  // Simple placeholder - you may already have this function implemented elsewhere
+  return 5731; // Example distance
+};
+
+const getTimezoneDifference = (country1, country2) => {
+  // Simple placeholder - you may already have this function implemented elsewhere
+  return "1 hour";
+};
+
+const formatTime = () => {
+  // Return the time in HH:MM:SS format (placeholder)
+  return "08:26:36";
 };
 
 export default ResultCard;

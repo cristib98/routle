@@ -51,73 +51,224 @@ const getTemperatureDiff = (temp1, temp2) => {
   return Math.round(temp2 - temp1);
 };
 
-// Main hint generator
-export const generateHint = (guessedCountry, targetCountry, hintNumber) => {
+// Main hint generator - updated with more hint types
+export const generateHint = (knownCountry, targetCountry, hintNumber) => {
   const distance = getDistanceInKm(
-    guessedCountry.latitude,
-    guessedCountry.longitude,
+    knownCountry.latitude,
+    knownCountry.longitude,
     targetCountry.latitude,
     targetCountry.longitude
   );
 
   const direction = getDirection(
-    guessedCountry.latitude,
-    guessedCountry.longitude,
+    knownCountry.latitude,
+    knownCountry.longitude,
     targetCountry.latitude,
     targetCountry.longitude
   );
 
   const temperatureDiff = getTemperatureDiff(
-    guessedCountry.averageTemperature,
+    knownCountry.averageTemperature,
     targetCountry.averageTemperature
   );
 
   const timezoneDiff = getTimeZoneDiff(
-    guessedCountry.timezone,
+    knownCountry.timezone,
     targetCountry.timezone
   );
 
-  const hemisphereHint =
-    guessedCountry.latitude * targetCountry.latitude >= 0
-      ? `The target country is in the same hemisphere as ${guessedCountry.name}`
-      : `The target country is in the opposite hemisphere from ${guessedCountry.name}`;
+  // Check if continent property exists before using it
+  const sameContinent =
+    knownCountry.continent && targetCountry.continent
+      ? knownCountry.continent === targetCountry.continent
+      : "Unknown";
 
-  // Select hint based on hint number
+  // Check if population property exists before using it
+  const hasPopulationData = knownCountry.population && targetCountry.population;
+  const populationComparison = hasPopulationData
+    ? targetCountry.population > knownCountry.population
+      ? "larger"
+      : "smaller"
+    : "unknown";
+
+  const populationRatio = hasPopulationData
+    ? Math.round(
+        Math.max(targetCountry.population, knownCountry.population) /
+          Math.min(targetCountry.population, knownCountry.population)
+      )
+    : 0;
+
+  // Check if hasCoastline property exists before using it
+  const hasCoastlineData =
+    "hasCoastline" in knownCountry && "hasCoastline" in targetCountry;
+  const coastline = hasCoastlineData
+    ? targetCountry.hasCoastline && knownCountry.hasCoastline
+      ? "Both countries have coastlines"
+      : targetCountry.hasCoastline
+      ? `Unlike ${knownCountry.name}, the target country has a coastline`
+      : `Like ${knownCountry.name}, the target country has no coastline`
+    : "Information about coastlines is not available";
+
+  // Check if area property exists before using it
+  const hasAreaData = knownCountry.area && targetCountry.area;
+  const landArea = hasAreaData
+    ? targetCountry.area > knownCountry.area * 1.5
+      ? `The target country is much larger than ${knownCountry.name}`
+      : targetCountry.area < knownCountry.area * 0.5
+      ? `The target country is much smaller than ${knownCountry.name}`
+      : `The target country is similar in size to ${knownCountry.name}`
+    : "Information about land area is not available";
+
+  // Check if languages property exists before using it
+  const hasLanguageData = knownCountry.languages && targetCountry.languages;
+  const officialLanguage = hasLanguageData
+    ? targetCountry.languages.some((lang) =>
+        knownCountry.languages.includes(lang)
+      )
+      ? `The target country shares at least one official language with ${knownCountry.name}`
+      : `The target country doesn't share any official languages with ${knownCountry.name}`
+    : "Information about languages is not available";
+
+  const hemisphereHint =
+    knownCountry.latitude * targetCountry.latitude >= 0
+      ? `The target country is in the same hemisphere as ${knownCountry.name}`
+      : `The target country is in the opposite hemisphere from ${knownCountry.name}`;
+
+  // Reorder hints from less obvious to more obvious
   switch (hintNumber) {
     case 1:
+      // Start with hemisphere - very general and not too revealing
       return {
-        type: "distance",
-        icon: "📏",
-        value: `The target country is about ${distance} km away from ${guessedCountry.name}`,
+        type: "hemisphere",
+        icon: "🌐",
+        value: hemisphereHint,
       };
     case 2:
-      return {
-        type: "direction",
-        icon: "🧭",
-        value: `Look towards the ${direction} from ${guessedCountry.name}`,
-      };
-    case 3:
+      // Then give temperature - gives some climate info but not specific location
       return {
         type: "temperature",
         icon: "🌡️",
         value: `The target country is ${Math.abs(temperatureDiff)}°C ${
           temperatureDiff > 0 ? "warmer" : "colder"
-        } than ${guessedCountry.name}`,
+        } than ${knownCountry.name}`,
       };
-    case 4:
+    case 3:
+      // Timezone gives a rough idea of east-west position
       return {
         type: "timezone",
         icon: "🕒",
         value: `The target country is ${Math.abs(timezoneDiff)} hour${
           Math.abs(timezoneDiff) !== 1 ? "s" : ""
-        } ${timezoneDiff > 0 ? "ahead of" : "behind"} ${guessedCountry.name}`,
+        } ${timezoneDiff > 0 ? "ahead of" : "behind"} ${knownCountry.name}`,
+      };
+    case 4:
+      // Continent/region narrows it down further
+      if (sameContinent === "Unknown") {
+        return {
+          type: "region",
+          icon: "🌍",
+          value: `The target country is in ${
+            targetCountry.region || "a different region"
+          }`,
+        };
+      }
+      return {
+        type: "continent",
+        icon: "🗺️",
+        value: sameContinent
+          ? `The target country is on the same continent as ${knownCountry.name}`
+          : `The target country is on a different continent than ${knownCountry.name}`,
       };
     case 5:
-    default:
+      // Now give direction - getting more specific
       return {
-        type: "hemisphere",
-        icon: "🌐",
-        value: hemisphereHint,
+        type: "direction",
+        icon: "🧭",
+        value: `Look towards the ${direction} from ${knownCountry.name}`,
+      };
+    case 6:
+      // Area gives size comparison
+      if (!hasAreaData) {
+        return {
+          type: "currency",
+          icon: "💰",
+          value: targetCountry.currency
+            ? `The currency of the target country is ${targetCountry.currency}`
+            : `The target country uses a different currency than ${knownCountry.name}`,
+        };
+      }
+      return {
+        type: "area",
+        icon: "📐",
+        value: landArea,
+      };
+    case 7:
+      // Population comparison
+      if (!hasPopulationData) {
+        return {
+          type: "capital",
+          icon: "��️",
+          value: targetCountry.capital
+            ? `The capital city of the target country starts with the letter "${targetCountry.capital.charAt(
+                0
+              )}"`
+            : `The target country has a different capital than ${knownCountry.name}`,
+        };
+      }
+      return {
+        type: "population",
+        icon: "👥",
+        value: `The target country has a ${populationComparison} population than ${
+          knownCountry.name
+        }${
+          populationRatio > 0
+            ? ` (about ${populationRatio}x ${
+                populationComparison === "larger" ? "more" : "fewer"
+              } people)`
+            : ""
+        }`,
+      };
+    case 8:
+      // Geography/coastline info
+      if (!hasCoastlineData) {
+        return {
+          type: "flag",
+          icon: "🚩",
+          value: `The flag of the target country contains ${
+            targetCountry.flagColors
+              ? "colors like " + targetCountry.flagColors
+              : "multiple colors"
+          }`,
+        };
+      }
+      return {
+        type: "geography",
+        icon: "🌊",
+        value: coastline,
+      };
+    case 9:
+      // Language - quite specific
+      if (!hasLanguageData) {
+        return {
+          type: "name",
+          icon: "🔤",
+          value: `The target country's name starts with the letter "${targetCountry.name.charAt(
+            0
+          )}"`,
+        };
+      }
+      return {
+        type: "language",
+        icon: "🗣️",
+        value: officialLanguage,
+      };
+    case 10:
+    default:
+      // Finally, distance as the most helpful hint
+      return {
+        type: "distance",
+        icon: "📏",
+        value: `The target country is about ${distance} km away from ${knownCountry.name}`,
       };
   }
 };

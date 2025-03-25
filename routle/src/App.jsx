@@ -6,6 +6,7 @@ import Instructions from "./components/Instructions";
 import Stats from "./components/Stats";
 import { getDailyPair } from "./data/routeData";
 import "./App.css";
+import OfflineBanner from "./components/OfflineBanner";
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
@@ -19,6 +20,22 @@ function App() {
     guessDistribution: [0, 0, 0, 0, 0, 0],
   });
   const [dailyPair, setDailyPair] = useState(null);
+
+  const [isOnline, setIsOnline] = useState(navigator.onLine);
+
+  useEffect(() => {
+    // Check online status
+    const handleOnline = () => setIsOnline(true);
+    const handleOffline = () => setIsOnline(false);
+
+    window.addEventListener("online", handleOnline);
+    window.addEventListener("offline", handleOffline);
+
+    return () => {
+      window.removeEventListener("online", handleOnline);
+      window.removeEventListener("offline", handleOffline);
+    };
+  }, []);
 
   // Check for dark mode preference on initial load
   useEffect(() => {
@@ -87,33 +104,36 @@ function App() {
   };
 
   return (
-    <div className="app-container">
-      <Header
-        onOpenInstructions={() => setShowInstructions(true)}
-        onOpenStats={() => setShowStats(true)}
-        darkMode={darkMode}
-        onToggleDarkMode={toggleDarkMode}
-      />
+    <div className={`app-container ${darkMode ? "dark-mode" : ""}`}>
+      {!isOnline && <OfflineBanner />}
+      <div className="app-container">
+        <Header
+          onOpenInstructions={() => setShowInstructions(true)}
+          onOpenStats={() => setShowStats(true)}
+          darkMode={darkMode}
+          onToggleDarkMode={toggleDarkMode}
+        />
 
-      <main className="main-content">
-        {dailyPair && (
-          <Game
-            knownCountry={dailyPair.knownCountry}
-            targetCountry={dailyPair.targetCountry}
-            onGameComplete={updateGameStats}
-          />
+        <main className="main-content">
+          {dailyPair && (
+            <Game
+              knownCountry={dailyPair.knownCountry}
+              targetCountry={dailyPair.targetCountry}
+              onGameComplete={updateGameStats}
+            />
+          )}
+        </main>
+
+        <Footer />
+
+        {showInstructions && (
+          <Instructions onClose={() => setShowInstructions(false)} />
         )}
-      </main>
 
-      <Footer />
-
-      {showInstructions && (
-        <Instructions onClose={() => setShowInstructions(false)} />
-      )}
-
-      {showStats && (
-        <Stats onClose={() => setShowStats(false)} gameStats={gameStats} />
-      )}
+        {showStats && (
+          <Stats onClose={() => setShowStats(false)} gameStats={gameStats} />
+        )}
+      </div>
     </div>
   );
 }

@@ -117,14 +117,27 @@
 }
 
 @media (max-width: 768px) {
-  .map-instructions {
-    font-size: 10px;
-    padding: 4px 8px;
+  .world-map-container {
+    height: 350px;
+    margin-bottom: 15px;
+  }
+
+  .reset-view-button {
+    bottom: 10px;
+    right: 10px;
+    padding: 6px 10px;
+    font-size: 11px;
   }
 }
 
 @media (max-width: 480px) {
-  .map-instructions {
-    display: none;
+  .world-map-container {
+    height: 300px;
+    margin-bottom: 10px;
+  }
+
+  .map-tooltip {
+    padding: 4px 8px;
+    font-size: 11px;
   }
 }
